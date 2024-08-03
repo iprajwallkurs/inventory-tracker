@@ -1,0 +1,1 @@
+The Inventory Tracker Web App enables easy inventory management with features for adding, editing, and tracking items. Built with Next.js, Material UI, Firebase, and Vercel.
