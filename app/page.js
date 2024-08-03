@@ -70,24 +70,24 @@ export default function Home() {
       alignItems="center"
       gap={2}
       bgcolor="black" 
-      color="white" 
+      color="white"
+      p={{ xs: 2, md: 0 }}
     >
       <Modal open={open} onClose={handleClose}>
         <Box
           position="absolute"
-          width={400}
-          bgcolor="black" 
-          border="2px solid white" 
+          width={{ xs: '90%', md: 400 }}
+          bgcolor="black"
+          border="2px solid white"
           boxShadow={24}
           p={4}
           display="flex"
           flexDirection="column"
           gap={3}
           sx={{
-            position: 'absolute',
             top: '50%',
             left: '50%',
-            transform: 'translate(-50%,-50%)',
+            transform: 'translate(-50%, -50%)',
           }}
         >
           <Typography variant="h3" color="white">Add Item</Typography>
@@ -100,20 +100,21 @@ export default function Home() {
                 setItemName(e.target.value);
               }}
               InputProps={{
-                style: { color: 'white', border: '2px solid white' }, 
+                style: { color: 'white', border: '2px solid white' },
               }}
               InputLabelProps={{
-                style: { color: 'white' }, 
+                style: { color: 'white' },
               }}
             />
             <Button
               variant="outlined"
-              style={{ border: '2px solid white', color: 'white' }} 
+              style={{ border: '2px solid white', color: 'white' }}
               onClick={() => {
                 addItem(itemName);
                 setItemName('');
                 handleClose();
               }}
+              sx={{ fontSize: '0.8rem', padding: '4px 8px', minWidth: 'auto' }}
             >
               ADD
             </Button>
@@ -121,44 +122,71 @@ export default function Home() {
         </Box>
       </Modal>
       <Button variant="contained" onClick={() => { handleOpen(); }}>ADD New Item</Button>
-      <Box border="2px solid white"> {/* Border color set to white */}
+      <Box
+        border="2px solid white"
+        width={{ xs: '100%', md: '800px' }} // Responsive width
+        maxHeight="calc(100vh - 200px)" // Max height relative to viewport
+        overflowY="auto"
+        sx={{ overflowX: 'hidden' }}
+      >
         <Box
-          width="800px"
-          height="100px"
+          width="100%"
           bgcolor="black"
           display="flex"
           alignItems="center"
           justifyContent="center"
-          borderBottom="2px solid white" 
+          borderBottom="2px solid white"
+          p={2}
         >
-          <Typography variant="h2" color="white">Inventory Items</Typography>
+          <Typography variant="h2" color="white" textAlign="center">Inventory Items</Typography>
         </Box>
-        <Stack width="800px" height="300px" spacing={2} overflow="auto">
+        <Box
+          display="grid"
+          gridTemplateColumns="1fr"
+          gap={2}
+          p={2}
+        >
           {inventory.map(({ name, quantity }) => (
             <Box
               key={name}
-              width="100%"
-              minHeight="150px"
               display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              bgcolor="black" 
-              padding={5}
-              border="2px solid white" 
+              flexDirection={{ xs: 'column', sm: 'row' }} // Responsive direction
+              justifyContent={{ xs: 'center', sm: 'space-between' }} // Responsive justification
+              alignItems="center" // Center alignment for all items
+              bgcolor="black"
+              padding={2}
+              border="2px solid white"
+              sx={{ gap: 2 }}
             >
-              <Typography variant="h3" color="white" textAlign="center">
+              <Typography variant="h4" color="white" textAlign="center" sx={{ flex: 1 }}>
                 {name.charAt(0).toUpperCase() + name.slice(1)}
               </Typography>
-              <Typography variant="h3" color="white" textAlign="center">
+              <Typography variant="h5" color="white" textAlign="center" sx={{ flex: 1 }}>
                 {quantity}
               </Typography>
-              <Stack direction="row" spacing={2}>
-                <Button variant="contained" onClick={() => addItem(name)}>Add</Button>
-                <Button variant="contained" onClick={() => removeItem(name)}>Remove</Button>
+              <Stack direction="row" spacing={2} sx={{ flex: 1, justifyContent: 'center', marginTop: { xs: 2, sm: 0 } }}>
+                <Button
+                  variant="contained"
+                  onClick={() => addItem(name)}
+                  sx={{
+                    fontSize: '0.8rem', padding: '4px 8px', minWidth: 'auto',
+                  }}
+                >
+                  Add
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => removeItem(name)}
+                  sx={{
+                    fontSize: '0.8rem', padding: '4px 8px', minWidth: 'auto',
+                  }}
+                >
+                  Remove
+                </Button>
               </Stack>
             </Box>
           ))}
-        </Stack>
+        </Box>
       </Box>
     </Box>
   );
